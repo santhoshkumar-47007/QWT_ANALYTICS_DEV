@@ -1,0 +1,28 @@
+version: 2
+
+models:
+  
+
+  - name: stg_shipments
+    columns:
+      - name: status
+        description: status represent actual status for the ordered item
+        tests:
+          - accepted_values:
+              values: ["shipped","ordered","returned","replaced"]
+  
+  - name: stg_orderdetails
+    description: transaction captured in source system for the items ordered by customers 
+    columns:
+      - name: orderid
+        tests:
+          - relationships:
+              field: orderid
+              to: ref('stg_orders')
+
+  - name: stg_customers
+    columns:
+      - name: customerid
+        tests:
+          - not_null
+          - unique
